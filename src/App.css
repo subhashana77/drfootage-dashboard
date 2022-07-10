@@ -1,38 +1,119 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;800&display=swap');
+
+.main-background {
+    background-image: url('./asset/login-background-desktop.jpg');
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.main-background .login-area {
+    padding-top: 3%;
+}
+.main-background .form-area {
+    padding-left: 45px;
+    padding-right: 45px;
+}
+.main-background .login-form h2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    color: #FFFFFF;
+    font-size: 45px;
+}
+.main-background .login-form p{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #707070;
+    font-size: 16px;
+}
+.main-background .login-form form{
+    display: block;
+}
+.main-background .login-form form label{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #707070;
+    font-size: 16px;
+}
+.main-background .login-form form input{
+    background-color: #262a28;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: #FFFFFF;
+    opacity: 0.8;
+    padding: 8px 12px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+.main-background .login-form form .remember-me{
+    display: block;
+}
+.main-background .login-form form .remember-me input, span{
+    vertical-align: middle;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    color: #707070;
+}
+.main-background .login-form form .forget-password a{
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    color: #707070 !important;
+    float: right;
+    transition: 0.5s;
+}
+.main-background .login-form form .forget-password a:hover{
+    color: #0349c8 !important;
+}
+.main-background .login-form form .login-button button{
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    color: #FFFFFF;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 7px;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: rgba(145, 255, 156, 0.24);
+    transition: 0.5s;
+}
+.main-background .login-form form .login-button button:hover{
+    background-color: rgb(5, 134, 18);
+}
+.main-background .login-form form .not-register {
+    display: block;
+}
+.main-background .login-form form .not-register span{
+    vertical-align: middle;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    color: #707070 !important;
+    transition: 0.5s;
+    padding-left: 5px;
+}
+.main-background .login-form form .not-register a{
+    vertical-align: middle;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    color: #707070 !important;
+    transition: 0.5s;
+    padding-left: 5px;
+}
+.main-background .login-form form .not-register a:hover{
+    color: #0349c8 !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+@media only screen and (max-width: 600px) {
+    .main-background {
+        background-image: url('./asset/login-background-mobile.jpg');
+        height: 100%;
+    }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    .main-background .login-form form .forget-password a{
+        float: left;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
 }

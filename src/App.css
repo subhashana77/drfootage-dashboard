@@ -105,15 +105,32 @@
     color: #0349c8 !important;
 }
 
+/*media query start-----------------------------------------*/
+
+@media only screen and (max-width: 1920px) {
+    .main-background .login-area {
+        padding-top: 11%;
+    }
+}
+@media only screen and (max-width: 1600px) {
+    .main-background .login-area {
+        padding-top: 7%;
+    }
+}
+@media only screen and (max-width: 1440px) {
+    .main-background .login-area {
+        padding-top: 4%;
+    }
+}
 @media only screen and (max-width: 600px) {
     .main-background {
         background-image: url('./asset/login-background-mobile.jpg');
-        height: 100%;
     }
-
     .main-background .login-form form .forget-password a{
         float: left;
         padding-top: 15px;
         padding-bottom: 15px;
     }
 }
+
+

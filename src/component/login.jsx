@@ -1,6 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Sweetalert from "../util/Sweetalert";
+
+
 
 function Login(props) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const loginHandler = async (e) => {
+
+        e.preventDefault();
+
+        const requestData = {username, password};
+
+        if (username === "" || password === "") {
+            await Sweetalert (
+                "warning",
+                "Warning!",
+                "Username and password are required!"
+            );
+        } else {
+            try {
+                const response = await fetch("http://localhost/projects/drfootage-backend/api/admin/login.php", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(requestData),
+                });
+
+                const results = await response.json();
+
+                if (results.success === true) {
+                    await Sweetalert (
+                        "success",
+                        "Successfully",
+                        username + " is logged in!"
+                    );
+                    setUsername(() => "");
+                    setPassword(() => "");
+                } else {
+                    await Sweetalert (
+                        "error",
+                        "Oops...",
+                        username + " login fail!"
+                    );
+                }
+
+            } catch (err) {
+                console.log (err.message)
+            }
+        }
+    }
+
     return (
         <div className="main-background">
             <div className="container">
@@ -12,11 +62,11 @@ function Login(props) {
                             <form className="pt-4">
                                 <div className="mb-3">
                                     <label htmlFor="username" className="form-label">Username*</label>
-                                    <input type="email" className="form-control" id="username" aria-describedby="emailHelp"/>
+                                    <input required value={username} placeholder="Username" onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" id="username" aria-describedby="emailHelp"/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">Password*</label>
-                                    <input type="password" className="form-control" id="password"/>
+                                    <input required value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} type  type="password" className="form-control" id="password"/>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-md-6 col-sm-12 remember-me">
@@ -24,15 +74,15 @@ function Login(props) {
                                         <span className="ps-2">Remember Me</span>
                                     </div>
                                     <div className="col-md-6 col-sm-12 forget-password">
-                                        <a href="#">Forget Password?</a>
+                                        <a href="tel:+94778152905">Forget Password?</a>
                                     </div>
                                 </div>
                                 <div className="mb-3 login-button">
-                                    <button>Login</button>
+                                    <button onClick={loginHandler}>Login</button>
                                 </div>
                                 <div className="mb-3 not-register">
                                     <span>Not Registered Yet?</span>
-                                    <a href="#">Contact Administrator</a>
+                                    <a href="tel:+94778152905">Contact Administrator</a>
                                 </div>
                             </form>
                         </div>

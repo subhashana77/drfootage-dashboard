@@ -1,19 +1,22 @@
 import React, {useState} from 'react';
 import Sweetalert from "../util/Sweetalert";
+import {useNavigate} from "react-router-dom";
 
 
+function Login() {
 
-function Login(props) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [admin_username, setUsername] = useState('');
+    const [admin_password, setPassword] = useState('');
+
+    let navigate = useNavigate();
 
     const loginHandler = async (e) => {
 
         e.preventDefault();
 
-        const requestData = {username, password};
+        const requestData = {admin_username, admin_password};
 
-        if (username === "" || password === "") {
+        if (admin_username === "" || admin_password === "") {
             await Sweetalert (
                 "warning",
                 "Warning!",
@@ -30,18 +33,18 @@ function Login(props) {
                 const results = await response.json();
 
                 if (results.success === true) {
-                    await Sweetalert (
-                        "success",
-                        "Successfully",
-                        username + " is logged in!"
-                    );
                     setUsername(() => "");
                     setPassword(() => "");
+
+                    // console.log(results.data);
+
+                    navigate('/dashboard', {state:{userinfo:results.data}});
+
                 } else {
                     await Sweetalert (
                         "error",
                         "Oops...",
-                        username + " login fail!"
+                        admin_username + " login fail!"
                     );
                 }
 
@@ -62,11 +65,11 @@ function Login(props) {
                             <form className="pt-4">
                                 <div className="mb-3">
                                     <label htmlFor="username" className="form-label">Username*</label>
-                                    <input required value={username} placeholder="Username" onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" id="username" aria-describedby="emailHelp"/>
+                                    <input required value={admin_username} placeholder="Username" onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" id="username" aria-describedby="emailHelp"/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">Password*</label>
-                                    <input required value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} type  type="password" className="form-control" id="password"/>
+                                    <input required value={admin_password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="password"/>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-md-6 col-sm-12 remember-me">

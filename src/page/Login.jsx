@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Sweetalert from "../util/Sweetalert";
+import SweetAlert from "../util/SweetAlert";
 import {useNavigate} from "react-router-dom";
 
 
@@ -17,7 +17,7 @@ function Login() {
         const requestData = {admin_username, admin_password};
 
         if (admin_username === "" || admin_password === "") {
-            await Sweetalert (
+            await SweetAlert (
                 "warning",
                 "Warning!",
                 "Username and password are required!"
@@ -41,7 +41,7 @@ function Login() {
                     navigate('/dashboard', {state:{userinfo:results.data}});
 
                 } else {
-                    await Sweetalert (
+                    await SweetAlert (
                         "error",
                         "Oops...",
                         admin_username + " login fail!"

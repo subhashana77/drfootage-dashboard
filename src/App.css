@@ -168,6 +168,7 @@
     font-weight: 700;
     color: white;
     margin-bottom: 5px;
+    font-size: 22px;
 }
 .nav-pane .identification p {
     font-family: 'Roboto', sans-serif;
@@ -179,6 +180,30 @@
 .nav-pane .identification svg {
     fill: white;
     width: 15px;
+}
+.nav-pane .add-footage {
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s
+}
+.nav-pane .add-footage:hover {
+    background-color: #202038;
+}
+.nav-pane .add-footage .nav-item .nav-icon {
+    width: 18px;
+    fill: #FFFFFF;
+}
+.nav-pane .add-footage .nav-item p {
+    margin-bottom: 0;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+}
+.nav-pane .add-footage .nav-item .nav-enter-icon {
+    width: 12px;
+    fill: #FFFFFF;
 }
 .name-card {
     cursor: pointer;

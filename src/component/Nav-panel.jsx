@@ -1,20 +1,24 @@
 import React, {useState} from 'react';
 import logo from '../asset/user_interface/logo.png';
 
-function NavPanel({userinfo, nameCardShow, addNewImageDataShow}) {
+function NavPanel({userinfo, nameCardShow, addNewImageDataShow, editRemoveFootageShow}) {
 
-    const nameCardHandler = (event) => {
+    const nameCardHandler = () => {
         addNewImageDataShow(false);
+        editRemoveFootageShow(false);
         nameCardShow(true);
     }
 
     const addNewImageHandler = () => {
         nameCardShow(false);
+        editRemoveFootageShow(false);
         addNewImageDataShow(true);
     }
 
     const editRemoveImageHandler = () => {
-
+        nameCardShow(false);
+        addNewImageDataShow(false);
+        editRemoveFootageShow(true);
     }
 
     return (

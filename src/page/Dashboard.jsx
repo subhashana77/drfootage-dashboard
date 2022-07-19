@@ -3,6 +3,7 @@ import {useLocation} from "react-router-dom";
 import NavPanel from "../component/Nav-panel";
 import NewFootage from "../component/New-footage";
 import NameCard from "../component/Name-card";
+import EditRemoveFootage from "../component/Edit-remove-footage";
 
 function Dashboard(effect, deps) {
     const location = useLocation();
@@ -10,6 +11,7 @@ function Dashboard(effect, deps) {
 
     const [infoCardIsShowing, setInfoCardIsShowing] = useState(false);
     const [newFootageIsShowing, setNewFootageIsShowing] = useState(false);
+    const [editRemoveFootageIsShowing, setEditRemoveFootageIsShowing] = useState(false)
 
     const nameCardShow = (value) => {
         setInfoCardIsShowing(value);
@@ -17,6 +19,10 @@ function Dashboard(effect, deps) {
 
     const addNewImageDataShow = (value) => {
         setNewFootageIsShowing(value);
+    }
+
+    const editRemoveFootageShow = (value) => {
+        setEditRemoveFootageIsShowing(value);
     }
 
     return (
@@ -27,6 +33,7 @@ function Dashboard(effect, deps) {
                         userinfo={userinfo}
                         nameCardShow={nameCardShow}
                         addNewImageDataShow={addNewImageDataShow}
+                        editRemoveFootageShow={editRemoveFootageShow}
                     />
                 </div>
                 <div className="col-9 p-relative">
@@ -38,6 +45,11 @@ function Dashboard(effect, deps) {
                     {
                         newFootageIsShowing && (
                             <NewFootage/>
+                        )
+                    }
+                    {
+                        editRemoveFootageIsShowing && (
+                            <EditRemoveFootage/>
                         )
                     }
                 </div>

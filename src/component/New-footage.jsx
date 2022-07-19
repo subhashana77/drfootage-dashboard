@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import FileUpload from "./FileUpload";
+import FileUpload from "./File-upload";
 
 function NewFootage(props) {
     const [files, setFiles] = useState([{

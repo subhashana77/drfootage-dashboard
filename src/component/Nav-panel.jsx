@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from '../asset/user_interface/logo.png';
 
-function NavPanel({userinfo}) {
+function NavPanel({userinfo, nameCardShow, addNewImageDataShow}) {
 
-    const nameCardHandler = () => {
-
+    const nameCardHandler = (event) => {
+        addNewImageDataShow(false);
+        nameCardShow(true);
     }
 
     const addNewImageHandler = () => {
+        nameCardShow(false);
+        addNewImageDataShow(true);
+    }
+
+    const editRemoveImageHandler = () => {
 
     }
 
@@ -64,7 +70,7 @@ function NavPanel({userinfo}) {
                 </div>
             </div>
             <div className="add-footage">
-                <div onClick={addNewImageHandler} className="nav-item">
+                <div onClick={editRemoveImageHandler} className="nav-item">
                     <div className="row">
                         <div className="col-2 mt-auto mb-auto">
                             <svg className="nav-icon float-start" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

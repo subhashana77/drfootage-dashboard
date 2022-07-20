@@ -464,14 +464,12 @@
     transition: background-color 0.4s;
     height: 46px;
 }
-
 .upload-btn button:hover {
     background-color: #01a70d;
 }
 .upload-btn button:hover svg{
     background-color: #01a70d;
 }
-
 .upload-btn button svg {
     width: 20px;
     height: 20px;
@@ -482,4 +480,19 @@
     justify-content: center;
     align-items: center;
     margin-right: 5px;
+}
+
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+/*Edit / Remove footage page*/
+/*///////////////////////////////////////////////////////////////////////////////////*/
+
+.search-bar-dropdown {
+    width: 61em;
+}
+#results {
+    position: absolute;
+    width: inherit;
+}
+#search-bar {
+    width: inherit;
 }

@@ -36,8 +36,6 @@ function Login() {
                     setUsername(() => "");
                     setPassword(() => "");
 
-                    // console.log(results.data);
-
                     navigate('/dashboard', {state:{userinfo:results.data}});
 
                 } else {
@@ -47,7 +45,6 @@ function Login() {
                         admin_username + " login fail!"
                     );
                 }
-
             } catch (err) {
                 console.log (err.message)
             }

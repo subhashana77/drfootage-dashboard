@@ -486,13 +486,14 @@
 /*Edit / Remove footage page*/
 /*///////////////////////////////////////////////////////////////////////////////////*/
 
-.search-bar-dropdown {
-    width: 61em;
+.search-button {
+    border: 1px #01a70d solid;
+    color: #01a70d;
+    transition: 0.5s;
+    width: 100%;
 }
-#results {
-    position: absolute;
-    width: inherit;
-}
-#search-bar {
-    width: inherit;
+.search-button:hover {
+    border: 1px #01a70d solid;
+    color: #FFFFFF;
+    background-color: #01a70d;
 }

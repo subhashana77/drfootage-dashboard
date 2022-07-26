@@ -486,14 +486,80 @@
 /*Edit / Remove footage page*/
 /*///////////////////////////////////////////////////////////////////////////////////*/
 
-.search-button {
+#results {
+    position: absolute;
+    width: inherit;
+    padding-right: 24px;
+}
+
+.update-remove-image .search-button {
     border: 1px #01a70d solid;
     color: #01a70d;
     transition: 0.5s;
     width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-.search-button:hover {
+.update-remove-image .search-button:hover {
     border: 1px #01a70d solid;
     color: #FFFFFF;
     background-color: #01a70d;
+}
+.update-remove-image .image-area {
+    background-color: #edf2f7;
+    border: 3px dashed #cbd5e0;
+    height: 250px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-remove-image .image-area img {
+    width: auto;
+    height: 250px;
+}
+.update-remove-image .footage-inputs{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    border-radius: 5px;
+    border: 1px #cbd5e0 solid;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    color: #302E2E;
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+    box-shadow: none;
+}
+.update-remove-image textarea{
+    height: 100px;
+}
+.update-remove-image .footage-inputs:focus-visible {
+    border: 1px #cbd5e0 solid !important;
+    outline: #cbd5e0;
+}
+.update-remove-image .btn {
+    transition: 0.5s;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 5px;
+}
+.update-remove-image .update-btn {
+    border: 1px #7493ff solid;
+    color: #FFFFFF;
+    background-color: #7493ff;
+}
+.update-remove-image .update-btn:hover {
+    border: 1px #003afc solid;
+    background-color: #003afc;
+}
+.update-remove-image .delete-btn {
+    border: 1px #fc8a65 solid;
+    color: #FFFFFF;
+    background-color: #fc8a65;
+}
+.update-remove-image .delete-btn:hover {
+    border: 1px #ff1b12 solid;
+    background-color: #ff1b12;
 }

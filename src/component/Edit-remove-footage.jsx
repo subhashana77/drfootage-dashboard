@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import image_icon from '../asset/user_interface/image-icon.png'
+// import image_icon from '../asset/user_interface/image-icon.png'
 
 function EditRemoveFootage() {
 
@@ -10,9 +10,6 @@ function EditRemoveFootage() {
     const [category_name, setSelectedCategory] = useState("");
 
     const [file_type, setNewType] = useState("");
-    // const [category_id, setCategoryId] = useState(0);
-
-    // let categoryName = "";
 
     const inputRef = useRef();
     const buttonRef = useRef();
@@ -62,7 +59,9 @@ function EditRemoveFootage() {
         (results.data).map((imageData) => (
             setImageDetail(imageData)
         ));
-        setSelectedCategory(imageDetail.selected_category_id);
+        (results.data).map((imageData) => (
+            setSelectedCategory(imageData.category_id)
+        ));
     }
 
     return (
@@ -99,7 +98,6 @@ function EditRemoveFootage() {
             <div className="row">
                 <div className="col-6">
                     <select id="categoryDropDown" value={category_name} aria-label="Default select example" onChange={(e) => setSelectedCategory(e.target.value)} className="w-100 footage-inputs form-select">
-                        {/*<option value="0">{selected_category}</option>*/}
                         <option value="0">Image Category</option>
                         {
                             category.map((categories, index) => (
@@ -119,10 +117,11 @@ function EditRemoveFootage() {
             </div>
             <textarea value={imageDetail.tags} placeholder="Insert tags one by one" className="w-100 footage-inputs"/>
             <div className="row">
-                <div className="col-6">
+                <div className="col-8"></div>
+                <div className="col-2">
                     <button className="btn delete-btn">Delete</button>
                 </div>
-                <div className="col-6">
+                <div className="col-2">
                     <button className="btn update-btn">Update</button>
                 </div>
             </div>

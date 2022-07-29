@@ -563,3 +563,12 @@
     border: 1px #ff1b12 solid;
     background-color: #ff1b12;
 }
+.spinner-grow {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+}

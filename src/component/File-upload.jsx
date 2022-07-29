@@ -95,7 +95,7 @@ function FileUpload() {
         } else {
             const base64_code = base64.split(",")[1];
             const unique_id = uuid();
-            const footage_name = newName + "_" + unique_id;
+            const footage_name = newName.split('.')[0] + "_" + unique_id;
             const requestData = {footage_name, file_type, added_date, tags, category_id, base64_code}
 
             try {
@@ -212,9 +212,9 @@ function FileUpload() {
                                 </svg>
                                 <select value={file_type} aria-label="Default select example" onChange={(e) => setNewType(e.target.value)} className="w-100 footage-inputs form-select">
                                     <option value="0">Image Type</option>
-                                    <option defaultValue value={"jpg"}>JPG</option>
-                                    <option value={"png"}>PNG</option>
-                                    <option value={"tiff"}>TIFF</option>
+                                    <option defaultValue value={"JPG"}>JPG</option>
+                                    <option value={"PNG"}>PNG</option>
+                                    <option value={"TIFF"}>TIFF</option>
                                 </select>
                             </div>
                             <div className="col-6 d-flex pe-0">

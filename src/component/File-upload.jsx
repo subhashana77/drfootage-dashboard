@@ -62,56 +62,24 @@ function FileUpload() {
     const footageUploadHandler = async (e) => {
         e.preventDefault();
 
-        if (currentName === "") {
-            await SweetAlert(
-                "warning",
-                "Warning!",
-                "Image selection is required. Please brows an image to upload first!"
-            );
-        } else if (newName === "") {
-            await SweetAlert(
-                "warning",
-                "Warning!",
-                "Image uploading name is required, please insert the name as you need!"
-            );
-        } else if (file_type === "") {
-            await SweetAlert(
-                "warning",
-                "Warning!",
-                "Image type is required, Please select the type as you need!"
-            );
-        } else if (category_id === 0) {
-            await SweetAlert(
-                "warning",
-                "Warning!",
-                "Image category is required, Please select the category as you need!"
-            );
-        } else if (tags === "") {
-            await SweetAlert(
-                "warning",
-                "Warning!",
-                "Image tags are required, Please insert the tags as you need!"
-            );
-        } else {
-            const base64_code = base64.split(",")[1];
-            const unique_id = uuid();
-            const footage_name = newName.split('.')[0] + "_" + unique_id;
-            const requestData = {footage_name, file_type, added_date, tags, category_id, base64_code}
+        const file_path = "http://localhost/projects/drfootage-backend/uploads/";
+        // const file_path = "D://uploadimages/";
+        const footage_name = newName + "_" + uuid();
+        const base64_code = base64.split(",")[1]
+        // console.log(base64_code);
 
-            try {
-                let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/save-image.php", {
-                    method : 'POST',
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(requestData),
-                });
-                let resJson = await res.json();
+        const requestData = {file_path, footage_name, file_type, added_date, tags, category_id, base64}
+        console.log(requestData);
 
-                if (resJson.success === true) {
-                    await SweetAlert(
-                        "success",
-                        "Successfully",
-                        newName + " has uploaded!"
-                    );
+        try {
+
+            let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/save-image.php", {
+                method : "POST",
+                headers : {"content-type": "application/json"},
+                body : JSON.stringify(requestData),
+            });
+
+            let responseJson = await res.json();
 
                     setBaseImage("");
                     setCurrentName("");
@@ -120,17 +88,51 @@ function FileUpload() {
                     setNewType("");
                     setNewTag("");
 
-                } else {
-                    await SweetAlert(
-                        "error",
-                        "Oops...",
-                        newName + " upload fail!"
-                    );
-                }
+            if (responseJson.success === true) {
+                await SweetAlert(
+                    "success",
+                    "Successfully",
+                    footage_name + " has registered!"
+                );
 
-            } catch (error) {
-                console.log(error);
+                // const baseCode = {base64_code}
+                //
+                // let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/save-image-file.php", {
+                //     method : 'POST',
+                //     headers : {'content-type': 'application/json'},
+                //     body : JSON.stringify(base64),
+                // });
+                //
+                // let resJson = await res.json();
+                //
+                // if (resJson.success === true) {
+                //     await SweetAlert(
+                //         "success",
+                //         "Successfully",
+                //         footage_name + " has saved!"
+                //     );
+                // } else {
+                //     await SweetAlert(
+                //         "error",
+                //         "Oops...",
+                //         newName + " savings fail!"
+                //     );
+                // }
+
+            } else {
+                await SweetAlert(
+                    "error",
+                    "Oops...",
+                    newName + " upload fail!"
+                );
             }
+        } catch (error)  {
+            await SweetAlert(
+                "error",
+                "Oops...",
+                newName + " upload fail! - " + error.message
+            );
+            console.log(error);
         }
     }
 
@@ -212,9 +214,9 @@ function FileUpload() {
                                 </svg>
                                 <select value={file_type} aria-label="Default select example" onChange={(e) => setNewType(e.target.value)} className="w-100 footage-inputs form-select">
                                     <option value="0">Image Type</option>
-                                    <option defaultValue value={"JPG"}>JPG</option>
-                                    <option value={"PNG"}>PNG</option>
-                                    <option value={"TIFF"}>TIFF</option>
+                                    <option defaultValue value={"jpg"}>JPG</option>
+                                    <option value={"png"}>PNG</option>
+                                    <option value={"tiff"}>TIFF</option>
                                 </select>
                             </div>
                             <div className="col-6 d-flex pe-0">

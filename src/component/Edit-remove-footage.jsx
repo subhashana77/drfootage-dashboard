@@ -10,7 +10,6 @@ function EditRemoveFootage() {
     const [imageTags, setImageTags] = useState("");
     const [imageCategory, setImageCategory] = useState("");
     const [isDefault, setIsDefault] = useState(false);
-    const [isPending, setIsPending] = useState(false);
 
     const current = new Date();
     const added_date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
@@ -33,13 +32,13 @@ function EditRemoveFootage() {
 
     useEffect(() => {
         loadAllImagesName();
-        inputRef.current.addEventListener('click', (event) => {
-            event.stopPropagation();
-            buttonRef.current.style.display = 'flex';
-        })
-        document.addEventListener('click', (event) => {
-            buttonRef.current.style.display = 'none';
-        });
+        // inputRef.current.addEventListener('click', (event) => {
+        //     event.stopPropagation();
+        //     buttonRef.current.style.display = 'flex';
+        // })
+        // document.addEventListener('click', (event) => {
+        //     buttonRef.current.style.display = 'none';
+        // });
         // pendingRef.current.style.display = 'none';
 
     }, [imageData]);
@@ -55,13 +54,13 @@ function EditRemoveFootage() {
 
     const updateImageDetail = async (e) => {
 
+        pendingRef.current.style.display = 'block';
+
         const tags = imageTags ? imageTags : imageData.tags;
         const category_id = imageCategory ? imageCategory : imageData.category_id;
         const footage_id = imageData.footage_id;
 
         const requestData = {added_date, tags, category_id, footage_id}
-
-        console.log(requestData);
 
         if (imageData.footage_name === "" || imageData.file_type === "") {
             await SweetAlert(
@@ -89,16 +88,14 @@ function EditRemoveFootage() {
             });
             let resJson = await res.json();
 
+            pendingRef.current.style.display = 'none';
+
             if (resJson.success === true) {
                 await SweetAlert(
                     "success",
                     "Successfully",
                     imageData.footage_name + " has updated!"
                 );
-                setImageData([""]);
-                setImageTags("");
-                setImageCategory("");
-                setAllImageNamesArr([]);
             } else {
                 await SweetAlert(
                     "error",
@@ -115,7 +112,7 @@ function EditRemoveFootage() {
 
     return (
         <div className="update-remove-image">
-            <div className="spinner-grow" role="status">
+            <div ref={pendingRef} className="spinner-grow" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>
             <div className="content-area">

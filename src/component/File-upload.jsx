@@ -62,17 +62,13 @@ function FileUpload() {
     const footageUploadHandler = async (e) => {
         e.preventDefault();
 
-        const file_path = "http://localhost/projects/drfootage-backend/uploads/";
-        // const file_path = "D://uploadimages/";
         const footage_name = newName + "_" + uuid();
-        const base64_code = base64.split(",")[1]
-        // console.log(base64_code);
+        const base64_code = base64.split(",")[1];
 
-        const requestData = {file_path, footage_name, file_type, added_date, tags, category_id, base64}
+        const requestData = {footage_name, file_type, added_date, tags, category_id, base64_code}
         console.log(requestData);
 
         try {
-
             let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/save-image.php", {
                 method : "POST",
                 headers : {"content-type": "application/json"},
@@ -94,30 +90,6 @@ function FileUpload() {
                     "Successfully",
                     footage_name + " has registered!"
                 );
-
-                // const baseCode = {base64_code}
-                //
-                // let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/save-image-file.php", {
-                //     method : 'POST',
-                //     headers : {'content-type': 'application/json'},
-                //     body : JSON.stringify(base64),
-                // });
-                //
-                // let resJson = await res.json();
-                //
-                // if (resJson.success === true) {
-                //     await SweetAlert(
-                //         "success",
-                //         "Successfully",
-                //         footage_name + " has saved!"
-                //     );
-                // } else {
-                //     await SweetAlert(
-                //         "error",
-                //         "Oops...",
-                //         newName + " savings fail!"
-                //     );
-                // }
 
             } else {
                 await SweetAlert(

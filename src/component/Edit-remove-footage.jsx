@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import SweetAlert from "../util/SweetAlert";
 import image_icon from '../asset/user_interface/image-icon.png'
+import SweetAlertConfirm from "../util/SweetAlertConfirm";
 
 function EditRemoveFootage() {
 
@@ -17,6 +18,13 @@ function EditRemoveFootage() {
     const inputRef = useRef();
     const buttonRef = useRef();
     const pendingRef = useRef();
+    const categoryRef = useRef();
+    const tagRef = useRef();
+
+    useEffect(() => {
+        buttonRef.current.style.display = 'none';
+        pendingRef.current.style.display = 'none';
+    },[imageData])
 
     const loadAllImagesName = async () => {
         const response = await fetch("http://localhost/projects/drfootage-backend/api/admin/get-image-data.php");
@@ -29,19 +37,6 @@ function EditRemoveFootage() {
         const responseData = await response.json();
         setCategory(responseData.data);
     }
-
-    useEffect(() => {
-        loadAllImagesName();
-        // inputRef.current.addEventListener('click', (event) => {
-        //     event.stopPropagation();
-        //     buttonRef.current.style.display = 'flex';
-        // })
-        // document.addEventListener('click', (event) => {
-        //     buttonRef.current.style.display = 'none';
-        // });
-        // pendingRef.current.style.display = 'none';
-
-    }, [imageData]);
 
     useEffect(() => {
         loadAllCategories();
@@ -88,15 +83,15 @@ function EditRemoveFootage() {
             });
             let resJson = await res.json();
 
-            pendingRef.current.style.display = 'none';
-
             if (resJson.success === true) {
+                pendingRef.current.style.display = 'none';
                 await SweetAlert(
                     "success",
                     "Successfully",
                     imageData.footage_name + " has updated!"
                 );
             } else {
+                pendingRef.current.style.display = 'none';
                 await SweetAlert(
                     "error",
                     "Oops...",
@@ -110,6 +105,66 @@ function EditRemoveFootage() {
         updateImageDetail();
     }
 
+    useEffect(() => {
+        loadAllImagesName();
+    }, [imageData]);
+
+    const deleteImage = async (e) => {
+
+        pendingRef.current.style.display = 'block';
+
+        let isConfirmed = false;
+
+        await SweetAlertConfirm(
+            "warning",
+            "Are you sure?",
+            "You won't be able to revert this!",
+            "Delete",
+        ).then((result) => {
+            if (result.isConfirmed) {
+                isConfirmed = true;
+            }
+        })
+
+        if (isConfirmed) {
+            let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/delete-image.php", {
+                method: 'DELETE',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({'footage_id' : imageData.footage_id}),
+            });
+
+            pendingRef.current.style.display = 'none';
+
+            let resJson = await res.json();
+            if (resJson.success === true) {
+                pendingRef.current.style.display = 'none';
+                await SweetAlert(
+                    "success",
+                    "Successfully",
+                    imageData.footage_name + " has deleted!"
+                );
+                setCategory([])
+                loadAllImagesName();
+                setImageData([]);
+                setIsDefault(true);
+                inputRef.current.value = "";
+                categoryRef.current.value = 0;
+                tagRef.current.value = "";
+            } else {
+                pendingRef.current.style.display = 'none';
+                await SweetAlert(
+                    "error",
+                    "Oops...",
+                    imageData.footage_name + " delete fail!"
+                );
+            }
+        }
+    }
+
+    const deleteImageDataHandler = (e) => {
+        deleteImage();
+    }
+
     return (
         <div className="update-remove-image">
             <div ref={pendingRef} className="spinner-grow" role="status">
@@ -120,13 +175,17 @@ function EditRemoveFootage() {
                     <div className="search-bar">
                         <div className="row d-flex">
                             <div className="col-12">
-                                <input type="text" ref={inputRef} className="form-control footage-inputs mt-0" placeholder="Search..." onChange={onSearchHandler}/>
+                                <input type="text" ref={inputRef} className="form-control footage-inputs mt-0" placeholder="Search..." onChange={onSearchHandler} onClick={(event => {
+                                    buttonRef.current.style.display = 'flex';
+                                })}/>
                                 <ul id="results" className="list-group" ref={buttonRef}>
                                     {
                                         allImageNameArr.map((imageNames, index) => (
                                             <button key={index} type="button" className="list-group-item list-group-item-dark text-end" onClick={(event => {
+                                                buttonRef.current.style.display = 'none';
                                                 inputRef.current.value = (imageNames.footage_name).split('_')[0];
                                                 setImageData(imageNames);
+                                                setImageTags("");
                                                 setIsDefault(false);
                                             })}>
                                                 {(imageNames.footage_name).split('_')[0]}
@@ -145,7 +204,7 @@ function EditRemoveFootage() {
                 <input disabled value={imageData.footage_name || ""} type="text" className="form-control footage-inputs" placeholder="Image Name"/>
                 <div className="row">
                     <div className="col-6">
-                        <select id="categoryDropDown" value={imageCategory ? imageCategory : imageData.category_id} aria-label="Default select example" className="w-100 footage-inputs form-select" onChange={(event) => setImageCategory(event.target.value)}>
+                        <select ref={categoryRef} id="categoryDropDown" value={imageCategory ? imageCategory : imageData.category_id} aria-label="Default select example" className="w-100 footage-inputs form-select" onChange={(event) => setImageCategory(event.target.value)}>
                             <option value="0">Image Category</option>
                             {
                                 category.map((categories, index) => (
@@ -158,11 +217,11 @@ function EditRemoveFootage() {
                         <input disabled value={imageData.file_type || ""} type="text" className="form-control footage-inputs" placeholder="Image Type"/>
                     </div>
                 </div>
-                <textarea value={imageTags ? imageTags : imageData.tags} placeholder="Insert tags one by one" className="w-100 footage-inputs" onChange={(event) => setImageTags(event.target.value)}/>
+                <textarea ref={tagRef} value={imageTags ? imageTags : imageData.tags} placeholder="Insert tags one by one" className="w-100 footage-inputs" onChange={(event) => setImageTags(event.target.value)}/>
                 <div className="row">
                     <div className="col-8"></div>
                     <div className="col-2">
-                        <button className="btn delete-btn">Delete</button>
+                        <button className="btn delete-btn" onClick={deleteImageDataHandler}>Delete</button>
                     </div>
                     <div className="col-2">
                         <button className="btn update-btn" onClick={updateImageDataHandler}>Update</button>

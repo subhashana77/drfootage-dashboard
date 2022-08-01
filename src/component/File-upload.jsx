@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import image_icon from '../asset/user_interface/image-icon.png'
 import SweetAlert from "../util/SweetAlert";
 import { v4 as uuid } from 'uuid';
@@ -15,6 +15,12 @@ function FileUpload() {
 
     const current = new Date();
     const added_date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
+    const pendingRef = useRef();
+
+    useEffect(() => {
+        pendingRef.current.style.display = 'none';
+    },[])
 
     const uploadHandler = async (e) => {
         const file = e.target.files[0];
@@ -62,11 +68,12 @@ function FileUpload() {
     const footageUploadHandler = async (e) => {
         e.preventDefault();
 
+        pendingRef.current.style.display = 'block';
+
         const footage_name = newName + "_" + uuid();
         const base64_code = base64.split(",")[1];
 
         const requestData = {footage_name, file_type, added_date, tags, category_id, base64_code}
-        console.log(requestData);
 
         try {
             let res = await fetch("http://localhost/projects/drfootage-backend/api/admin/save-image.php", {
@@ -85,6 +92,7 @@ function FileUpload() {
                     setNewTag("");
 
             if (responseJson.success === true) {
+                pendingRef.current.style.display = 'none';
                 await SweetAlert(
                     "success",
                     "Successfully",
@@ -92,6 +100,7 @@ function FileUpload() {
                 );
 
             } else {
+                pendingRef.current.style.display = 'none';
                 await SweetAlert(
                     "error",
                     "Oops...",
@@ -99,6 +108,7 @@ function FileUpload() {
                 );
             }
         } catch (error)  {
+            pendingRef.current.style.display = 'none';
             await SweetAlert(
                 "error",
                 "Oops...",
@@ -110,6 +120,9 @@ function FileUpload() {
 
     return (
         <div>
+            <div ref={pendingRef} className="spinner-grow" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
             <div className="file-card">
                 <div className="file-inputs">
                     <input id="custom-file" type="file" onChange={uploadHandler}/>

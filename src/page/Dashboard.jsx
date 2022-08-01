@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useLocation} from "react-router-dom";
 import NavPanel from "../component/Nav-panel";
 import NewFootage from "../component/New-footage";
 import NameCard from "../component/Name-card";
 import EditRemoveFootage from "../component/Edit-remove-footage";
 
-function Dashboard(effect, deps) {
+function Dashboard() {
     const location = useLocation();
     let userinfo = location.state.userinfo;
 
@@ -23,6 +23,10 @@ function Dashboard(effect, deps) {
 
     const editRemoveFootageShow = (value) => {
         setEditRemoveFootageIsShowing(value);
+    }
+
+    const reloadTheNameList = () => {
+        alert("Hello");
     }
 
     return (
@@ -49,7 +53,7 @@ function Dashboard(effect, deps) {
                     }
                     {
                         editRemoveFootageIsShowing && (
-                            <EditRemoveFootage/>
+                            <EditRemoveFootage reloadTheNameList={reloadTheNameList}/>
                         )
                     }
                 </div>

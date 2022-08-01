@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import logo from '../asset/user_interface/logo.png';
 
-function NavPanel({userinfo, nameCardShow, addNewImageDataShow, editRemoveFootageShow}) {
+function NavPanel({userinfo, nameCardShow, addNewImageDataShow, editRemoveFootageShow, loadAllImagesName}) {
 
     const nameCardHandler = () => {
         addNewImageDataShow(false);
@@ -19,6 +19,7 @@ function NavPanel({userinfo, nameCardShow, addNewImageDataShow, editRemoveFootag
         nameCardShow(false);
         addNewImageDataShow(false);
         editRemoveFootageShow(true);
+        // loadAllImagesName();
     }
 
     return (
@@ -48,8 +49,8 @@ function NavPanel({userinfo, nameCardShow, addNewImageDataShow, editRemoveFootag
                     ))
                 }
             </div>
-            <div className="add-footage">
-                <div onClick={addNewImageHandler} className="nav-item">
+            <div onClick={addNewImageHandler} className="add-footage">
+                <div className="nav-item">
                     <div className="row">
                         <div className="col-2 mt-auto mb-auto">
                             <svg className="nav-icon float-start" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -73,8 +74,8 @@ function NavPanel({userinfo, nameCardShow, addNewImageDataShow, editRemoveFootag
                     </div>
                 </div>
             </div>
-            <div className="add-footage">
-                <div onClick={editRemoveImageHandler} className="nav-item">
+            <div onClick={editRemoveImageHandler} className="add-footage">
+                <div className="nav-item">
                     <div className="row">
                         <div className="col-2 mt-auto mb-auto">
                             <svg className="nav-icon float-start" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

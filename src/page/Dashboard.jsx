@@ -4,6 +4,7 @@ import NavPanel from "../component/Nav-panel";
 import NewFootage from "../component/New-footage";
 import NameCard from "../component/Name-card";
 import EditRemoveFootage from "../component/Edit-remove-footage";
+import ViewImages from "../component/View-Images";
 
 function Dashboard() {
     const location = useLocation();
@@ -12,6 +13,7 @@ function Dashboard() {
     const [infoCardIsShowing, setInfoCardIsShowing] = useState(false);
     const [newFootageIsShowing, setNewFootageIsShowing] = useState(false);
     const [editRemoveFootageIsShowing, setEditRemoveFootageIsShowing] = useState(false)
+    const [showFootageIsShowing, setShowFootageIsShowing] = useState(false)
 
     const nameCardShow = (value) => {
         setInfoCardIsShowing(value);
@@ -25,8 +27,8 @@ function Dashboard() {
         setEditRemoveFootageIsShowing(value);
     }
 
-    const reloadTheNameList = () => {
-        alert("Hello");
+    const showFootageShow = (value) => {
+        setShowFootageIsShowing(value);
     }
 
     return (
@@ -38,6 +40,7 @@ function Dashboard() {
                         nameCardShow={nameCardShow}
                         addNewImageDataShow={addNewImageDataShow}
                         editRemoveFootageShow={editRemoveFootageShow}
+                        showFootageShow={showFootageShow}
                     />
                 </div>
                 <div className="col-9 p-relative">
@@ -53,7 +56,12 @@ function Dashboard() {
                     }
                     {
                         editRemoveFootageIsShowing && (
-                            <EditRemoveFootage reloadTheNameList={reloadTheNameList}/>
+                            <EditRemoveFootage/>
+                        )
+                    }
+                    {
+                        showFootageIsShowing && (
+                            <ViewImages/>
                         )
                     }
                 </div>

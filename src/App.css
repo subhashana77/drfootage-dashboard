@@ -584,3 +584,169 @@
 .show-all-footage hr:nth-child(1){
     margin-top: 5px;
 }
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 240px;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: 215px;
+    border-radius: 10px;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .5s ease;
+    border-radius: 10px;
+}
+
+.overlay .row .col-6 {
+    position: absolute;
+    bottom: 0;
+}
+
+.overlay .row .col-6 p {
+    color: white;
+    font-size: 10px;
+    border: 1px white solid;
+    border-radius: 10px;
+    display: inline;
+    padding: 1px 6px;
+}
+
+.overlay .image-type p{
+    color: white;
+    font-size: 11px;
+    width: 100%;
+    text-align: right;
+    padding-right: 15px;
+    padding-top: 10px;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+.overlay .row .image-date {
+    left: 0;
+}
+
+.overlay .row .image-category {
+    right: 0;
+    text-align: right;
+}
+
+.overlay .row .image-date p {
+    float: left;
+    cursor: pointer;
+}
+
+.overlay .row .image-category p {
+    float: right;
+}
+
+.overlay .row .image-category select {
+    width: auto;
+    background-image: none;
+    background-color: transparent;
+    color: white;
+    font-size: 10px;
+    border: 1px white solid;
+    border-radius: 10px;
+    display: inline;
+    padding: 1px 6px;
+    text-align: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.overlay .delete-img-btn button {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: transparent;
+    border-radius: 15px;
+    justify-content: center;
+    display: inline-grid;
+    border: 1px transparent solid;
+    transition: 0.3s;
+}
+
+.overlay .delete-img-btn button svg {
+    fill: #FFFFFF;
+    width: 10px;
+    transition: 0.3s;
+}
+
+.overlay .delete-img-btn button:hover {
+    width: 26px;
+    height: 26px;
+    border: 1px #e75959 solid;
+    background-color: #e75959;
+}
+
+.overlay .delete-img-btn button:hover svg{
+    fill: #FFFFFF;
+    width: 14px;
+    margin-top: 3px;
+}
+
+.image-container:hover .overlay {
+    height: 215px;
+    cursor: pointer;
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.tags {
+    font-size: 12px;
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    color: white;
+    text-align: center;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-decoration: double;
+}
+
+.show-all-footage {
+    overflow-y: scroll;
+    height: 95vh;
+    widows: 100%;
+}
+
+
+
+@media only screen and (min-width: 1920px) {
+    .image-container {
+        height: 300px;
+    }
+    .image {
+        height: 275px;
+    }
+    .image-container:hover .overlay {
+        height: 275px;
+    }
+}

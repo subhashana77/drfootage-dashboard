@@ -29,7 +29,15 @@ function EditRemoveFootage() {
     const loadAllImagesName = async () => {
         const response = await fetch("http://localhost/projects/drfootage-backend/api/admin/get-image-data.php");
         const responseData = await response.json();
-        setAllImageNamesArr(responseData.data);
+        if (responseData.data != null) {
+            setAllImageNamesArr(responseData.data);
+        } else {
+            await SweetAlert(
+                "info",
+                "Sorry",
+                "No image to preview!"
+            );
+        }
     }
 
     const loadAllCategories = async () => {

@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SweetAlertConfirm from "../util/SweetAlertConfirm";
 import SweetAlert from "../util/SweetAlert";
 
@@ -8,21 +7,28 @@ const ViewImages = () => {
     const [category, setCategory] = useState([]);
     const [imageCategory, setImageCategory] = useState('');
     const [imageData, setImageData] = useState([]);
+
     const pendingRef = useRef();
+    const typeRef = useRef();
+    const categoryRef = useRef();
+    const nameRef = useRef();
+    const tagRef = useRef();
 
     const loadAllCategories = async () => {
         const response = await fetch("http://localhost/projects/drfootage-backend/api/admin/get-category.php");
         const responseData = await response.json();
         setCategory(responseData.data);
     }
+
     const loadAllImagesName = async () => {
+        setImageData([]);
         pendingRef.current.style.display = 'block';
 
         const response = await fetch("http://localhost/projects/drfootage-backend/api/admin/get-image-data.php");
         const responseData = await response.json();
+        pendingRef.current.style.display = 'none';
 
         if (responseData.data != null) {
-            pendingRef.current.style.display = 'none';
             setImageData(responseData.data);
         } else {
             await SweetAlert(
@@ -31,7 +37,6 @@ const ViewImages = () => {
                 "No image to preview!"
             );
         }
-        console.log(responseData.data)
     }
 
     const deleteImageHandler = async (footage_id, image_name) => {
@@ -72,6 +77,130 @@ const ViewImages = () => {
         }
     }
 
+    const loadImageByTypeHandler = async (file_type) => {
+        setImageData([]);
+        nameRef.current.value = "";
+        categoryRef.current.value = 0;
+        tagRef.current.value = "";
+        pendingRef.current.style.display = 'block';
+
+        if (file_type == 0) {
+            loadAllImagesName();
+        } else {
+            let response = await fetch("http://localhost/projects/drfootage-backend/api/admin/find-image-with-type.php", {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({'file_type': file_type}),
+            });
+            const responseData = await response.json();
+            pendingRef.current.style.display = 'none';
+
+            if (responseData.data != null) {
+                setImageData(responseData.data);
+            } else {
+                setImageData([]);
+                await SweetAlert(
+                    "info",
+                    "Sorry",
+                    "No types like" + file_type + " to preview!"
+                );
+            }
+        }
+    }
+
+    const loadImageByCategoryHandler = async (category_id, category) => {
+        setImageData([]);
+        nameRef.current.value = "";
+        typeRef.current.value = 0;
+        tagRef.current.value = "";
+        pendingRef.current.style.display = 'block';
+
+        if (category_id == 0) {
+            loadAllImagesName();
+        } else {
+            let response = await fetch("http://localhost/projects/drfootage-backend/api/admin/find-image-with-category.php", {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({'category_id': category_id}),
+            });
+            const responseData = await response.json();
+            pendingRef.current.style.display = 'none';
+
+            if (responseData.data != null) {
+                setImageData(responseData.data);
+            } else {
+                setImageData([]);
+                await SweetAlert(
+                    "info",
+                    "Sorry",
+                    "No category like " + category + " to preview!"
+                );
+            }
+        }
+    }
+
+    const loadImageByNameHandler = async (footage_name) => {
+        setImageData([]);
+        typeRef.current.value = 0;
+        categoryRef.current.value = 0;
+        tagRef.current.value = "";
+        pendingRef.current.style.display = 'block';
+
+        if (footage_name === 0) {
+            loadAllImagesName();
+        } else {
+            let response = await fetch("http://localhost/projects/drfootage-backend/api/admin/find-image-with-name.php", {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({'footage_name': footage_name}),
+            });
+            const responseData = await response.json();
+            pendingRef.current.style.display = 'none';
+
+            if (responseData.data != null) {
+                setImageData(responseData.data);
+            } else {
+                setImageData([]);
+                await SweetAlert(
+                    "info",
+                    "Sorry",
+                    "No names like " + footage_name + " to preview!"
+                );
+            }
+        }
+    }
+
+    const loadImageByTagsHandler = async (tags) => {
+        setImageData([]);
+        nameRef.current.value = "";
+        categoryRef.current.value = 0;
+        tagRef.current.value = "";
+        pendingRef.current.style.display = 'block';
+
+        if (tags === 0) {
+            loadAllImagesName();
+        } else {
+            let response = await fetch("http://localhost/projects/drfootage-backend/api/admin/find-image-with-tags.php", {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({'tags': tags}),
+            });
+            const responseData = await response.json();
+            pendingRef.current.style.display = 'none';
+
+            if (responseData.data != null) {
+                setImageData(responseData.data);
+            } else {
+                setImageData([]);
+                await SweetAlert(
+                    "info",
+                    "Sorry",
+                    "No tags like " + tags + " to preview!"
+                );
+            }
+        }
+    }
+
     useEffect(() => {
         pendingRef.current.style.display = 'none';
         loadAllCategories();
@@ -83,19 +212,26 @@ const ViewImages = () => {
             <hr/>
             <div className="row pe-3 ps-2">
                 <div className="col-6 ps-1 pe-1">
-                    <input type="text" className="form-control" placeholder="Names here..."/>
+                    <input ref={nameRef} type="text" className="form-control" placeholder="Names here..." onKeyUp={(event => {
+                        loadImageByNameHandler(event.target.value)
+                    })}/>
                 </div>
                 <div className="col-2 ps-1 pe-1">
-                    <select aria-label="Default select example" className="form-select">
-                        <option value="0">Type</option>
+                    <select ref={typeRef} aria-label="Default select example" className="form-select" onChange={(event) =>
+                        loadImageByTypeHandler(event.target.value)
+                    }>
+                        <option value="0">All Type</option>
                         <option defaultValue value={"jpg"}>JPG</option>
                         <option value={"png"}>PNG</option>
                         <option value={"tiff"}>TIFF</option>
                     </select>
                 </div>
                 <div className="col-2 ps-1 pe-1">
-                    <select value={imageCategory} aria-label="Default select example" className="form-select" onChange={(event) => setImageCategory(event.target.value)}>
-                        <option value="0">Category</option>
+                    <select ref={categoryRef} value={imageCategory} aria-label="Default select example" className="form-select" onChange={(event => {
+                        setImageCategory(event.target.value);
+                        loadImageByCategoryHandler(event.target.value, imageCategory)
+                    })}>
+                        <option value="0">All Category</option>
                         {
                             category.map((categories, index) => (
                                 <option key={index} value={categories.category_id}>{categories.category_name}</option>
@@ -104,7 +240,9 @@ const ViewImages = () => {
                     </select>
                 </div>
                 <div className="col-2 ps-1 pe-1">
-                    <input type="text" className="form-control" placeholder="Tags here..."/>
+                    <input ref={tagRef} type="text" className="form-control" placeholder="Tags here..." onKeyUp={(event => {
+                        loadImageByTagsHandler(event.target.value)
+                    })}/>
                 </div>
             </div>
             <hr/>
@@ -150,7 +288,7 @@ const ViewImages = () => {
                                                 <option value="0">Category</option>
                                                 {
                                                     category.map((categories, index) => (
-                                                        <option key={index} value={categories.category_id}>{categories.category_name}</option>
+                                                        <option key={index} value={categories.category_id} >{categories.category_name}</option>
                                                     ))
                                                 }
                                             </select>

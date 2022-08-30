@@ -706,6 +706,16 @@
     cursor: pointer;
 }
 
+.form-control:focus {
+    border-color: darkgrey;
+    box-shadow : none;
+}
+
+.form-select:focus {
+    border-color: darkgrey;
+    box-shadow : none;
+}
+
 .text {
     color: white;
     font-size: 20px;
@@ -716,6 +726,8 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 100%;
+    padding-bottom: 15px;
 }
 
 .tags {
